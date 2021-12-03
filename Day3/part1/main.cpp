@@ -69,6 +69,18 @@ int main()
     cout << bingamma << endl;
     cout << binepsilon << endl;
 
+
+    // cout << "oneArr: " << endl;
+    // for(int i = 0; i < 12; i++) {
+    //     cout << oneArr[i] << endl;
+    // }
+
+    // cout << endl;
+    // cout << "zeroArr: " << endl;
+    // for (int i = 0; i < 12; i++) {
+    //     cout << zeroArr[i] << endl;
+    // }
+
     myfile.close();
     outfile.close();
 
