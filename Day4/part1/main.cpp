@@ -85,7 +85,7 @@ int main()
     int finalCall;
     int winningCard;
 
-    while(bingo != true)
+    while (bingo != true)
     {
         // cout << "input cur: " << inputs[F] << endl;
         for (int i = 0; i < dino.size(); i++)
@@ -131,15 +131,31 @@ int main()
                     // break;
                 }
             }
-
-            // if (bingo == true)
-            // {
-            //     // break;
-            // }
         }
         F++;
     }
 
+    int sum = 0;
+
+    for (int i = 0; i < dino[winningCard].size(); i++)
+    {
+        if (dino[winningCard][i] != -1)
+        {
+            sum += dino[winningCard][i];
+        }
+    }
+
+    cout << "Sum: " << sum << endl;
+
+    int final = sum * finalCall;
+
+    ofstream outfile("p1out4.txt");
+
+    outfile << final << endl;
+    cout << final << endl;
+
+
+    // For testing
     // for (int i = 0; i < dino[0].size(); i++)
     // {
     //     cout << dino[0][i] << " ";
@@ -170,23 +186,6 @@ int main()
     //         cout << endl;
     //     }
     // }
-
-    int sum = 0;
-
-    for(int i = 0; i < dino[winningCard].size(); i++) {
-        if(dino[winningCard][i] != -1) {
-            sum += dino[winningCard][i];
-        }
-    }
-
-    cout << "Sum: " << sum << endl;
-
-    int final = sum * finalCall;
-
-    ofstream outfile ("p1out4.txt");
-
-    outfile << final << endl;
-    cout << final << endl;
 
     return 0;
 }
