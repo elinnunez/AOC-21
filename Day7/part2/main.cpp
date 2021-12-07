@@ -53,7 +53,7 @@ int main()
     {
             // cout << "Found: " << j << endl;
             int curMin = 0;
-            int count = 0;
+            
             for (int i = 0; i < ship.size(); i++)
             {
                 int k = 0;
