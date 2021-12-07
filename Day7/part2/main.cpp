@@ -53,18 +53,24 @@ int main()
     {
             // cout << "Found: " << j << endl;
             int curMin = 0;
+            int count = 0;
             for (int i = 0; i < ship.size(); i++)
             {
+                int k = 0;
                 // cout << ship[i] << " -> ";
                 if (ship[i] > j)
                 {
-                    curMin += (ship[i] - j);
-                    // cout << ship[i] - j << " ";
+                    while((ship[i] - k) != j) {
+                        k++;
+                        curMin+=k;
+                    }
                 }
                 else if (ship[i] < j)
                 {
-                    curMin += (j - ship[i]);
-                    // cout << j - ship[i];
+                    while((ship[i]+k) != j) {
+                        k++;
+                        curMin+=k;
+                    }
                 }
             }
 
@@ -81,7 +87,7 @@ int main()
 
     cout << minFuel << endl;
 
-    ofstream outfile("p1out7.txt");
+    ofstream outfile("p2out7.txt");
 
     outfile << minFuel << endl;
 
