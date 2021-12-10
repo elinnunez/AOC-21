@@ -4,6 +4,7 @@
 #include <vector>
 #include <algorithm>
 #include <regex>
+#include <cmath>
 #include <stack>
 
 using namespace std;
@@ -38,12 +39,12 @@ void parseInput(string textfile, vector<string> &adjL)
 int main() {
     vector<string> phrases;
 
-    parseInput("test10.txt", phrases);
+    parseInput("input10.txt", phrases);
 
     // std::cout << "Phrases Len: " << phrases.size() << std::endl;
 
     vector<char> broken;
-    vector<int> completed;
+    vector<long long int> completed;
     for(int i = 0; i < phrases.size(); i++) {
         string str = phrases[i];
         // cout << str << ": ";
@@ -76,6 +77,7 @@ int main() {
         }
 
         if(flag == false) {
+            // cout << "String: " << str << " -> ";
             string needed;
             // std::cout << "Good: " << str << std::endl;
             while(!bag.empty()) {
@@ -91,50 +93,63 @@ int main() {
                 }
                 bag.pop();
             }
-            std::cout << "Needed: " << needed << std::endl;
+            // std::cout << "Needed: " << needed << std::endl;
             
-            int tot = 0;
+            long long int tot = 0;
 
             for(int i = 0; i < needed.length(); i++) {
                 char cur = needed[i];
+                // cout << cur << " -> ";
                 tot*= 5;
+                // cout << "tot bf: " << tot << " -> ";
                 if(cur == ')') {
                     tot+= 1;
+                    // cout << "adding 1" << " -> ";
                 } else if (cur == ']') {
                     tot+= 2;
+                    // cout << "adding 2" << " -> ";
                 } else if (cur == '}') {
                     tot+= 3;
+                    // cout << "adding 3" << " -> ";
                 } else if (cur == '>') {
                     tot+= 4;
+                    // cout << "adding 4" << " -> ";
                 }
+                // cout << tot << endl;
             }
+            completed.push_back(tot);
         } else {
             // std::cout << "Corrupted: " << str << std::endl;
+            continue;
         }
     }
 
-    int total = 0;
+    // int total = 0;
     
-    // std::cout << "Broken Chars: " << std::endl;
-    for(int i = 0; i < broken.size(); i++) {
-        char cur = broken[i];
-        // std::cout << cur << std::endl;
-        if(cur == ')') {
-            total+= 3;
-        } else if (cur == ']') {
-            total+= 57;
-        } else if (cur == '}') {
-            total+= 1197;
-        } else if (cur == '>') {
-            total+= 25137;
-        }
-    }
+    // // std::cout << "Broken Chars: " << std::endl;
+    // for(int i = 0; i < broken.size(); i++) {
+    //     char cur = broken[i];
+    //     // std::cout << cur << std::endl;
+    //     if(cur == ')') {
+    //         total+= 3;
+    //     } else if (cur == ']') {
+    //         total+= 57;
+    //     } else if (cur == '}') {
+    //         total+= 1197;
+    //     } else if (cur == '>') {
+    //         total+= 25137;
+    //     }
+    // }
 
-    std::cout << "Corrupted Total: " << total << std::endl;
+    sort(completed.begin(), completed.end());
 
-    ofstream outfile("p2outtest10.txt");
+    int median = completed[floor(completed.size()/2)];
 
-    outfile << total << endl;
+    std::cout << "Completed Median: " << median << std::endl;
+
+    ofstream outfile("p2out10.txt");
+
+    outfile << median << endl;
 
     return 0;
 }
