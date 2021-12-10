@@ -7,7 +7,8 @@
 
 using namespace std;
 
-void parseInput(string textfile, vector<vector<int>>& adjL) {
+void parseInput(string textfile, vector<vector<int>> &adjL)
+{
     ifstream mf(textfile);
 
     if (!mf.is_open())
@@ -31,13 +32,13 @@ void parseInput(string textfile, vector<vector<int>>& adjL) {
 
         line = std::regex_replace(line, std::regex("^ +| +$|( ) +"), "$1"); // removes leading, trailing and extra spacing;
 
-        for(int i = 0; i < line.size(); i++) {
+        for (int i = 0; i < line.size(); i++)
+        {
             curV.push_back((line[i] - '0'));
         }
 
         adjL.push_back(curV);
     }
-
 }
 
 int main()
@@ -45,25 +46,111 @@ int main()
 
     vector<vector<int>> matrix;
 
-    parseInput("test9.txt", matrix);
+    vector<int> lowpoints;
 
-    for(int i = 0; i < matrix.size(); i++) {
+    parseInput("input9.txt", matrix);
+
+    for (int i = 0; i < matrix.size(); i++)
+    {
         vector<int> cur = matrix[i];
         std::cout << "Row " << i << ": ";
 
-        for(int j = 0; j < cur.size(); j++) {
+        for (int j = 0; j < cur.size(); j++)
+        {
             std::cout << cur[j] << " ";
+            int temp = cur[j];
+            if (i == 0)
+            {
+                if (j == 0)
+                {
+                    if (temp < cur[j + 1] && temp < matrix[1][0])
+                    {
+                        lowpoints.push_back(temp);
+                    }
+                }
+                else if (j == cur.size() - 1)
+                {
+                    if (temp < cur[j - 1] && temp < matrix[1][cur.size() - 1])
+                    {
+                        lowpoints.push_back(temp);
+                    }
+                }
+                else
+                {
+                    if (temp < cur[j - 1] && temp < cur[j + 1] && temp < matrix[1][j])
+                    {
+                        lowpoints.push_back(temp);
+                    }
+                }
+            }
+            else if (i == matrix.size() - 1)
+            {
+                if (j == 0)
+                {
+                    if (temp < cur[j + 1] && temp < matrix[i - 1][0])
+                    {
+                        lowpoints.push_back(temp);
+                    }
+                }
+                else if (j == cur.size() - 1)
+                {
+                    if (temp < cur[j - 1] && temp < matrix[i - 1][j])
+                    {
+                        lowpoints.push_back(temp);
+                    }
+                }
+                else
+                {
+                    if (temp < cur[j - 1] && temp < cur[j + 1] && temp < matrix[i - 1][j])
+                    {
+                        lowpoints.push_back(temp);
+                    }
+                }
+            }
+            else
+            {
+                if (j == 0)
+                {
+                    if (temp < cur[j + 1] && temp < matrix[i - 1][0] && temp < matrix[i + 1][0])
+                    {
+                        lowpoints.push_back(temp);
+                    }
+                }
+                else if (j == cur.size() - 1)
+                {
+                    if (temp < cur[j - 1] && temp < matrix[i - 1][j] && temp < matrix[i + 1][j])
+                    {
+                        lowpoints.push_back(temp);
+                    }
+                }
+                else
+                {
+                    if (temp < cur[j - 1] && temp < cur[j + 1] && temp < matrix[i - 1][j] && temp < matrix[i + 1][j])
+                    {
+                        lowpoints.push_back(temp);
+                    }
+                }
+            }
         }
         std::cout << std::endl;
     }
 
-    int final;
+    std::cout << std::endl;
 
-    ofstream outfile("p1outtest9.txt");
+    int final = lowpoints.size();
 
-    // outfile << final << endl;
-    // cout << final << endl;
+    std::cout << "Low Points: ";
+    for (int i = 0; i < lowpoints.size(); i++)
+    {
+        std::cout << lowpoints[i] << " ";
+        final+= lowpoints[i];
+    }
+    std::cout << std::endl;
 
+    ofstream outfile("p1out9.txt");
+
+    outfile << final << endl;
+    cout << "Sum: " << final << endl;
 
     return 0;
 }
